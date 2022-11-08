@@ -34,7 +34,7 @@ export class Calculator {
             '-' : () => this.result = this.actualNumber,
             '*' : () => this.result * this.actualNumber,
             '/' : () => this.result / this.actualNumber,
-            '%' : () => this.result % this.actualNumber;
+            '%' : () => this.result % this.actualNumber
         }
 
         this.result = makeExpression[this.operator]();
