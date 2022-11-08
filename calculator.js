@@ -1,42 +1,63 @@
 export class Calculator {
-    _operators = ['%', '/', '+', '-', '*']
+  _operators = ["%", "÷", "+", "-", "x"];
 
-    actualNumber = null;
-    result = 0;
-    operator = '+'
+  actualNumber = null;
+  result = 0;
+  operator = "+";
 
-    clean() {
-        this.actualNumber = null;
-        this.result = 0;
-        this.history = null;
+  clean() {
+    this.actualNumber = "";
+    this.result = 0;
+    this.operator = "+";
+  }
+
+  setActualNumber(number) {
+    if (!this.actualNumber) {
+      this.actualNumber = number;
+      return;
+    }
+    this.actualNumber = `${this.actualNumber}${number}`;
+  }
+
+  setOperator(operator) {
+    if (!this._operators.includes(operator)) {
+      return this.isCleanKey(operator) ? this.clean() : this.handleEquals();
     }
 
-    setActualNumber(number) {
-        this.actualNumber = number;
+    if (!this.actualNumber) {
+      this.operator = operator;
+      return;
     }
 
-    setOperator(operator) {
-        if (!his._operators.includes(operator)) return;
+    this.countNumber();
+    this.actualNumber = "";
+    this.operator = operator;
+  }
 
-        if (actualNumber == null) {
-            this.operator = operator;
-            return;
-        }
+  countNumber() {
+    const makeExpression = {
+      "+": () => Number(this.result) + Number(this.actualNumber),
+      "-": () => Number(this.result) - Number(this.actualNumber),
+      x: () => Number(this.result) * Number(this.actualNumber),
+      "÷": () => Number(this.result) / Number(this.actualNumber),
+      "%": () => Number(this.result) % Number(this.actualNumber),
+    };
 
-        countNumber();
-        actualNumber = null;
-        this.operator = operator;
+    this.result = makeExpression[this.operator]();
+
+    if (isNaN(this.result)) {
+      alert("Something wrong happened");
+      this.clean();
     }
+  }
 
-    countNumber() {
-        const makeExpression = {
-            '+' : () => this.result + this.actualNumber,
-            '-' : () => this.result = this.actualNumber,
-            '*' : () => this.result * this.actualNumber,
-            '/' : () => this.result / this.actualNumber,
-            '%' : () => this.result % this.actualNumber
-        }
+  isCleanKey(key) {
+    return key === "CE";
+  }
 
-        this.result = makeExpression[this.operator]();
-    }
+  handleEquals() {
+    this.countNumber();
+    this.actualNumber = "";
+    this.operator = "+";
+  }
 }
