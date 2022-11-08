@@ -1,21 +1,42 @@
 export class Calculator {
-    result;
-    history;
-    operator = '+'
-
     _operators = ['%', '/', '+', '-', '*']
 
+    actualNumber = null;
+    result = 0;
+    operator = '+'
+
     clean() {
-        this.result = null;
+        this.actualNumber = null;
+        this.result = 0;
         this.history = null;
     }
 
-    changeOperator(operator) {
-        if (this._operators.includes(operator)) {
-            operator = operator;
-        }
-                
+    setActualNumber(number) {
+        this.actualNumber = number;
     }
 
+    setOperator(operator) {
+        if (!his._operators.includes(operator)) return;
 
+        if (actualNumber == null) {
+            this.operator = operator;
+            return;
+        }
+
+        countNumber();
+        actualNumber = null;
+        this.operator = operator;
+    }
+
+    countNumber() {
+        const makeExpression = {
+            '+' : () => this.result + this.actualNumber,
+            '-' : () => this.result = this.actualNumber,
+            '*' : () => this.result * this.actualNumber,
+            '/' : () => this.result / this.actualNumber,
+            '%' : () => this.result % this.actualNumber;
+        }
+
+        this.result = makeExpression[this.operator]();
+    }
 }
