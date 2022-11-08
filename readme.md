@@ -1,1 +1,1 @@
-<img src="./git/calculator.git"/>
+<img src="./gif/calculator.gif"/>
